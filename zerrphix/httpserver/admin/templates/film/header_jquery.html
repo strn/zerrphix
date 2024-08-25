@@ -1,0 +1,216 @@
+<script>
+$(document).ready(function(){
+  $(document).on('click', ".raw_image", function () {
+    if (! $(this).hasClass("w3-green") ){
+        pthis = this;
+      $(".raw_image").removeClass("w3-green");
+      $(".raw_image").removeClass("w3-red");
+      var set_user_image_url = '/film/{{ zp_film_id }}/{{ image_type }}/set/' + $(pthis).attr('image_id')
+      $.getJSON( set_user_image_url, function( data ) {
+            console.log('first' + data);
+        }).done(function(data) {
+            console.log('done' + data);
+            $(pthis).addClass("w3-green");
+        }).fail(function(data) {
+            console.log('fail' + data);
+            $(pthis).addClass("w3-red");
+        }).always(function(data) {
+            console.log('always' + data);
+        });
+    }
+  });
+  {% if raise_user_alert == True %} alert("{{ raise_alter_message }}"); {% endif %}
+  $(function(){
+
+    $("#rating_apply").click(function(){
+        $("#rating_form").submit();
+    });
+
+    $("#title_apply").click(function(){
+        var title_radio_form_radio_checked = $('input[name=zp_film_title_id]:checked', '#title_radio_form').val()
+        console.log('title_radio_form radio checked value: ' + title_radio_form_radio_checked)
+        var div_zp_film_title_pattern = /^\d+_(.*)/;
+        var match = div_zp_film_title_pattern.exec(title_radio_form_radio_checked);
+        console.log(match[0]);
+        console.log(match[1]);
+        $('#zp_title_title').val($('#' + title_radio_form_radio_checked).text());
+        $('#zp_title_ident').val(match[1]);
+        $('#title_form').submit();
+    });
+
+    $("#overview_apply").click(function(){
+        var overview_radio_form_radio_checked = $('input[name=zp_film_overview_id]:checked', '#overview_radio_form').val()
+        console.log('overview_radio_form radio checked value: ' + overview_radio_form_radio_checked)
+        var div_zp_film_overview_pattern = /^\d+_(.*)/;
+        var match = div_zp_film_overview_pattern.exec(overview_radio_form_radio_checked);
+        console.log(match[0]);
+        console.log(match[1]);
+        $('#zp_overview_overview').val($('#' + overview_radio_form_radio_checked).text());
+        $('#zp_overview_ident').val(match[1]);
+        $('#overview_form').submit();
+    });
+
+    $(".div_title").click(function(){
+        var this_id = this.id;
+        var div_id_pattern =  /^(\d+)_/;
+        var match = div_id_pattern.exec(this_id);
+        console.log(match[0]);
+        console.log(match[1]);
+        $("#" + match[1] + "_radio").prop("checked", true);
+    });
+    $(".div_overview").click(function(){
+        var this_id = this.id;
+        var div_id_pattern =  /^(\d+)_/;
+        var match = div_id_pattern.exec(this_id);
+        console.log(match[0]);
+        console.log(match[1]);
+        $("#" + match[1] + "_radio").prop("checked", true);
+    });
+
+    $('#film_select').change(function(){
+        var new_url = '/film/' + $(this).val() + '/summary';
+        location.href = new_url;
+    });
+    $("#search_for_film").click(function(){
+        $("#search_result_warning").text('Searching.....');
+        $("#search_result_error").text('');
+        if( $('#search_text').val().length === 0 ) {
+             alert('Name cannot be empty');
+        }else{
+              var subJson = { search_text: $('#search_text').val() }
+              console.log(subJson);
+             $.getJSON( "/film/searchFilms", subJson, function( data ) {
+             }).done(function(data) {
+                if (data.success == true){
+                    $('#film_select').empty();
+                    $.each(data.films, function(i, item) {
+                        console.log(data.films[i].title);
+                        console.log(data.films[i].id);
+                            $('#film_select').append($('<option>', {
+                                value: item.id,
+                                text : item.title
+                            }));
+                    });
+                        if (data.warning) {
+                            $("#search_result_warning").text(data.warning);
+                        }else {
+                            $("#search_result_warning").text('Search completed');
+                        }
+                        if (data.error) {
+                            if (data.error !== 'null') {
+                                $("#search_result_error").text(data.warning);
+                            }
+                        }
+                }
+             }).fail(function(data) {
+                 $("#search_result_error").text('Error in search for films data:' + data);
+                console.log('fail'  + data);
+             }).always(function(data) {
+                console.log('always'  + data);
+             });
+        }
+    });
+
+
+    $("#genre_button").click(function(){
+        $("#genre_select > option:selected").each(function(){
+            $(this).remove().appendTo("#film_genre_select");
+        });
+    });
+
+    $("#film_genre_button").click(function(){
+        $("#film_genre_select > option:selected").each(function(){
+            $(this).remove().appendTo("#genre_select");
+        });
+    });
+    $("#formsubmit").click(function(){
+        var film_genre_array = new Array();
+        $("#film_genre_select > option").each(function() {
+            film_genre_array.push(this.value)
+        });
+        $("#film_genre_list").val(JSON.stringify(film_genre_array));
+        $("#form").submit();
+    });
+    $("#cformsubmit").click(function(){
+        var film_actor_array = new Array();
+        $("#actor_select > option").each(function() {
+            film_actor_array.push(this.value)
+        });
+        $("#film_actor_json").val(JSON.stringify(film_actor_array));
+        $("#cform").submit();
+    });
+
+    $("#actor_button").click(function(){
+        $("#actor_select > option:selected").each(function(){
+            $(this).remove();
+        });
+    });
+
+    $("#person_button").click(function(){
+        $("#person_select > option:selected").each(function(){
+            console.log($(this).val());
+            if ($("#actor_select option[value=" + $(this).val() + "]").length > 0){
+                alert('Allready in actors');
+            }else{
+               $(this).remove().appendTo("#actor_select");
+            }
+        });
+    });
+
+    $("#search_for_actor").click(function(){
+            $("#search_result_warning").text('Searching.....');
+            $("#search_result_error").text('');
+        if( $('#name').val().length === 0 ) {
+             alert('Name cannot be empty');
+        }else{
+              var subJson = { name: $('#name').val() }
+              console.log(subJson);
+             $.getJSON( "/film/searchActors", subJson, function( data ) {
+             }).done(function(data) {
+                if (data.success == true){
+                    $('#person_select').empty();
+                    $.each(data.actors, function(i, item) {
+                        console.log(data.actors[i].name);
+                        console.log(data.actors[i].id);
+                            $('#person_select').append($('<option>', {
+                                value: item.id,
+                                text : item.name
+                            }));
+                    });
+                        if (data.warning) {
+                            $("#search_result_warning").text(data.warning);
+                        }else {
+                            $("#search_result_warning").text('Search completed');
+                        }
+                        if (data.error) {
+                            if (data.error !== 'null') {
+                                $("#search_result_error").text(data.warning);
+                            }
+                        }
+                }
+             }).fail(function(data) {
+                 $("#search_result_error").text('Error in search for films data:' + data);
+                console.log('always'  + data);
+             }).always(function(data) {
+                console.log('always'  + data);
+             });
+        }
+    });
+
+    $("#formsubmit").click(function(){
+        var temp_array = new Array();
+        $("#actor_select > option").each(function() {
+            temp_array.push(this.value)
+        });
+        $("#hidden_json_post").val(JSON.stringify(temp_array));
+        $("#form").submit();
+    });
+
+    $('#unidentified_select').change(function(){
+        var new_url = '/film/' + $(this).val() + '/identify';
+        location.href = new_url;
+    });
+
+  });
+});
+</script>

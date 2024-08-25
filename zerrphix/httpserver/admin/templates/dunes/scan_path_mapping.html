@@ -1,0 +1,47 @@
+{% include "root_header_begin.html" %}
+{% include "dunes/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "dunes/sidebar_start.html" %}
+{% include "dunes/sidebar_main.html" %}
+{% include "dunes/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Dune - {{ dune_name }} - Scan Path Mapping</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for scan_path_map_key in scan_path_map_keys %}
+                        <td>{{ scan_path_map_title_dict[scan_path_map_key] }}</td>
+                    {% endfor %}
+                </tr>
+                {% for scan_path_map_dict in scan_path_map_list %}
+                    <tr>
+                        {% for scan_path_map_key in scan_path_map_keys %}
+                            <td>
+                                {% if scan_path_map_key in scan_path_map_edit_dict %}
+                                     {% if scan_path_map_edit_dict[scan_path_map_key] == 'text' %}
+                                        <input id="{{ scan_path_map_dict['id'] }}_{{ scan_path_map_key }}"
+                                               name="{{ scan_path_map_dict['id'] }}_{{ scan_path_map_key }}"
+                                               type="text" value="{{ scan_path_map_dict[scan_path_map_key] }}" size="30">
+                                     {% endif %}
+                                {% else %}
+                                    {{ scan_path_map_dict[scan_path_map_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+            <input type="submit" value="Apply">
+            </form>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

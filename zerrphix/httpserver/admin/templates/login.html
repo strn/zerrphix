@@ -1,0 +1,39 @@
+{% include "root_header_begin.html" %}
+{% include "root_header_end.html" %}
+{% include "root_sidebar_start.html" %}
+{% include "root_sidebar_main.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>Welcome to Zerrphix Admin</b></h5>
+      <h5><b>Please Login</b></h5>
+
+  </header>
+    <div class="w3-container">
+          <div class="w3-full">
+              {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+            <form action="" method="post" class="form-horizontal">
+                    <p>Username:
+                  <input type="text" id="username" name="username"
+                    placeholder="Enter Username" required>
+                    </p>
+                    <p>Password:
+                  <input type="password" id="password" name="password"
+                    placeholder="Enter Password" required>
+                    </p>
+                  <input type="submit" value="submit">
+          </form>
+          </div>
+    </div>
+
+{% include "root_footer.html" %}

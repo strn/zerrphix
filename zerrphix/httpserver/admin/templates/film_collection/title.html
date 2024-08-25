@@ -1,0 +1,59 @@
+{% include "root_header_begin.html" %}
+{% include "film_collection/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "film_collection/sidebar_start.html" %}
+{% include "film_collection/sidebar_selected.html" %}
+{% include "film_collection/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>{{ film_collection_title }} - Title</b></h5>
+  </header>
+  <div class="w3-container">
+          <div class="w3-full">
+              {% if film_collection_title_list is not none %}
+                  {% set checked = false %}
+                  <form id="title_radio_form">
+                  {% for zp_eapi_id, zp_eapi_dict in film_collection_title_list.items() %}
+                      {% for title in zp_eapi_dict.titles %}
+                        {% if title.zp_film_collection_title_id == user_film_collection_title_id %}
+                            {% set checked = true %}
+                        {% endif %}
+                            <input id="{{ title.id_inc }}_radio" type="radio" name="zp_film_collection_title_id" value="{{ title.id_inc }}_{{ title.zp_film_collection_title_id }}_{{ title.zp_lang_id }}_{{ title.zp_film_collection_title_type_id }}_{{ title.main_default }}_{{ title.lang_default }}_{{ title.zp_user_id }}"
+                            {{ 'checked' if checked == true }}>
+                      {% if zp_eapi_id > 0 %}
+                        EAPI: {{ eapi_name_dict[zp_eapi_id] }}, Lang: {{ lang_name_dict[title.zp_lang_id] }}, TitleType: {{ tile_type_name_dict[title.zp_film_collection_title_type_id] }} (All users can see this)
+                      {% elif title.zp_user_id > 0 and title.zp_user_id == current_user.id|int %}
+                        Your Custom Title (All users can see this)
+                      {% elif title.zp_user_id > 0 and title.zp_user_id != current_user.id|int %}
+                        Other Users Custom Title (All users can see this)
+                      {% elif title.lang_default == 1 %}
+                        Your Language Default (Only people with the same language setting as you can see this)
+                      {% elif title.main_default == 1 %}
+                        Main Default (All users can see this)
+                      {% else %}
+                        This message should not be seen please report this as an issue
+                      {% endif %}
+                      <div id="{{ title.id_inc }}_{{ title.zp_film_collection_title_id }}_{{ title.zp_lang_id }}_{{ title.zp_film_collection_title_type_id }}_{{ title.main_default }}_{{ title.lang_default }}_{{ title.zp_user_id }}"
+                           contentEditable="true" placeholder="Last name"
+                           class="div_title" style="background-color: white;padding: 15px;">{{ title.title }}</div><br>
+                        {% set checked = false %}
+                      {% endfor %}
+                  {% endfor %}
+                  </form>
+                  <br>
+                  <button id="title_apply" type="button">Apply</button>
+                  <form action="" method="post" id="title_form" enctype="multipart/form-data">
+                      <input id="zp_title_ident" type="hidden" name="zp_title_ident" value="">
+                      <input id="zp_title_title" type="hidden" name="zp_title_title" value="">
+                  </form>
+              {% else %}
+                  <p>There is no title</p>
+              {% endif %}
+          </div>
+  </div>
+  <br/>
+
+{% include "root_footer.html" %}

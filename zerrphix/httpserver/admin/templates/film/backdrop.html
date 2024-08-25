@@ -1,0 +1,31 @@
+{% include "root_header.html" %}
+{% include "root_sidebar.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b><i class="fa fa-dashboard"></i>{{ film_title }}</b></h5>
+  </header>
+    {% for image_group in image_groups %}
+     <div class="w3-row-padding w3-margin-bottom">
+         {% for image in image_group %}
+        <div class="w3-quarter">
+            <div class="w3-container w3-{{ image.class_colour }} w3-padding-16 icon" {% if image.source_type == "eapi" %} type="e" {% endif %} image_filename="{{ image.image_filename }}">
+                <img src="{{ image.image_url }}">
+             </div>
+        </div>
+         {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="w3-container">
+        <h5>Upload image:</h5>
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileToUpload">
+            <input type="submit" value="Upload Image" name="submit">
+        </form>
+        <br/>
+    </div>
+
+    {% include "root_footer.html" %}

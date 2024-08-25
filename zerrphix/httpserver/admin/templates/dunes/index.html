@@ -1,0 +1,32 @@
+{% include "root_header_begin.html" %}
+{% include "dunes/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "dunes/sidebar_start.html" %}
+{% include "dunes/sidebar_main.html" %}
+{% include "dunes/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Dunes</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <p>Add Dune</p>
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+                <p>Dune Name: <input type="text" value="" name="dune_name">
+            <input type="submit" value="Add"></p>
+            </form>
+        </div>
+        <div class="w3-full">
+            {% for dune_dict in dune_list %}
+                <p>{{ dune_dict['name'] }} - <a href="/dunes/manage/{{ dune_dict['id'] }}">UI Store</a>,
+                <a href="/dunes/playPath/{{ dune_dict['id'] }}">Play Paths</a>,
+                <a href="/dunes/duneFolderTxt/{{ dune_dict['id'] }}">Dune_Folder.txt</a>
+                </p>
+            {% endfor %}
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

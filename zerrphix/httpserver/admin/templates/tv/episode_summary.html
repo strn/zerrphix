@@ -1,0 +1,51 @@
+{% include "root_header_begin.html" %}
+{% include "tv/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "tv/sidebar_start.html" %}
+{% include "tv/sidebar_episode.html" %}
+{% include "tv/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+      <h5><b><a href="/tv/{{ zp_tv_id }}/summary">{{ tv_title }}</a> - <a href="/tv/{{ zp_tv_id }}/{{ selected_season }}/summary">
+          Season {{ selected_season }}</a> - <a href="/tv/{{ zp_tv_id }}/{{ selected_season }}/{{ selected_episode }}/summary">Episode {{ selected_episode }}</a> ({{ episode_title }})</b></h5>
+  </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <p><a href="/tv/{{ zp_tv_id }}/title"><b>Title:</b></a> {{ episode_title }}</p>
+            <p><a href="/tv/{{ zp_tv_id }}/overview"><b>Overview:</b></a> {{ episode_overview }}</p>
+        </div>
+    </div>
+  <div class="w3-container">
+      <a href="/tv/{{ zp_tv_id }}/{{ selected_season }}/{{ selected_episode }}/screenshot"><p><b>Raw Screenshot Image</b></p>
+          <div class="w3-half">
+              <div class="w3-container w3-padding-16">
+                  <img src="/i/raw/tv/episode/{{ tv_episode_poster_raw_image_id }}">
+              </div>
+          </div>
+      </a>
+  </div>
+    {% for zp_image_type_id in render_templates_display_dict|sort %}
+        {% for zp_icon_sub_type_id in render_templates_display_dict[zp_image_type_id]['icon_sub_type_list']|sort %}
+            <div class="w3-container">
+                <a href="/i/rendered/tv/{{ render_templates_display_dict[zp_image_type_id]['icon_sub_type_list'][zp_icon_sub_type_id]['render_hash_id'] }}">
+                <p>Rendered {{ render_templates_display_dict[zp_image_type_id]['name'] }} Image - Sub Type ID {{ zp_icon_sub_type_id }}</p>
+                    <div class="w3-twothird">
+                        <div class="w3-container w3-padding-16">
+                            <img src="/i/rendered/tv/episode/{{ render_templates_display_dict[zp_image_type_id]['icon_sub_type_list'][zp_icon_sub_type_id]['render_hash_id'] }}">
+                        </div>
+                    </div>
+                </a>
+                <br>
+            </div>
+            <div class="w3-container">
+                <p><a href="/tv/{{ zp_tv_id }}/{{ selected_season }}/{{ selected_episode }}/{{ render_templates_display_dict[zp_image_type_id]['name'] }}/{{ zp_icon_sub_type_id }}/render">Live Render</a></p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <br>
+  <br/>
+
+{% include "root_footer.html" %}

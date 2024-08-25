@@ -1,0 +1,50 @@
+<script>
+$(document).ready(function(){
+    $(function(){
+        $("#scan_path_form_submit").click(function(){
+            $("#scan_path_form").submit();
+        });
+        $("#scan_path_add_form_submit").click(function(){
+            $("#scan_path_add_form").submit();
+        });
+        $("#share_add_form_submit").click(function(){
+            $("#share_add_form").submit();
+        });
+        $("#share_form_submit").click(function(){
+            $("#share_form").submit();
+        });
+        $("#share_server_add_form_submit").click(function(){
+            $("#share_server_add_form").submit();
+        });
+        $("#share_server_form_submit").click(function(){
+            $("#share_server_form").submit();
+        });
+        $("#share_credential_path_form_submit").click(function(){
+            $("#share_credential_form").submit();
+        });
+        $("#share_credential_add_form_submit").click(function(){
+            $("#share_credential_add_form").submit();
+        });
+
+        $("#test_connection").click(function(){
+            post_data = {'path': $('#path').val(),
+                'zp_share_id': $('#zp_share_id').val(),
+                'zp_share_server_id':$('#zp_share_server_id').val(),
+                'zp_share_credential_id':$('#zp_share_credential_id').val(),
+                'fs_type':$('#fs_type').val()
+            };
+            $.post("/scan_path/test_new", post_data, function( data ) {
+             }).done(function(data) {
+                var jsonresp = $.parseJSON(data);
+                $("#test_message").text(jsonresp.message);
+                $("#test_error").text(jsonresp.error);
+             }).fail(function(data) {
+                 $("#test_error").text('Error in trying to test scan path connection');
+                console.log('fail'  + data);
+             }).always(function(data) {
+                console.log('always'  + data);
+            });
+        });
+    });
+});
+</script>

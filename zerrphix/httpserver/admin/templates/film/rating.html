@@ -1,0 +1,34 @@
+{% include "root_header_begin.html" %}
+{% include "film/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "film/sidebar_start.html" %}
+{% include "film/sidebar_film_selected.html" %}
+{% include "film/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>{{ film_title }} - Rating</b></h5>
+  </header>
+  <div class="w3-container">
+          <div class="w3-full">
+              <h5>Rating</h5>
+              <form action="" method="post" id="rating_form" enctype="multipart/form-data">
+              <select id="rating_select" size="10" name="rating">
+                  {% for rating in film_ratings %}
+                    {% if rating.selected == True %}
+                        <option value="{{ rating.rating }}" selected>{{ rating.rating }}</option>
+                    {% else %}
+                        <option value="{{ rating.rating }}">{{ rating.rating }}</option>
+                    {% endif %}
+                  {% endfor %}
+              </select>
+              </form>
+              <br>
+              <button id="rating_apply" type="button">Apply</button>
+          </div>
+  </div>
+  <br/>
+
+{% include "root_footer.html" %}

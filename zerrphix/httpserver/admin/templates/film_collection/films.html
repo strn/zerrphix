@@ -1,0 +1,53 @@
+{% include "root_header_begin.html" %}
+{% include "film_collection/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "film_collection/sidebar_start.html" %}
+{% include "film_collection/sidebar_selected.html" %}
+{% include "film_collection/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>{{ film_collection_title }} - Manage Collection Films</b></h5>
+  </header>
+  <div class="w3-container">
+          <div class="w3-quarter">
+              <h5>Film(s) in Collection</h5>
+              <select id="film_in_collection_select" multiple="multiple" size="10">
+                  {% for film in film_collection_films %}
+                      <option value="{{ film.zp_film_id }}">{{ film.title }}</option>
+                  {% endfor %}
+              </select>
+              <br/>
+              <button id="film_remove_button" type="button" >Remove Film(s) from Film Collection</button>
+          </div>
+          <div class="w3-quarter">
+              <h5>Films Search Results</h5>
+                  <select id="film_not_in_collection_select" multiple="multiple" size="10">
+                  </select>
+              <br/>
+              <button id="film_add_button" type="button">
+                  Add Film(s) to Film Collection</button>
+          </div>
+          <div class="w3-quarter">
+              <h5>Title</h5>
+              <input id="search_film_text" type="text" size="25" value="">
+              <br/>
+              <br/>
+              <button id="search_film" type="button">
+                  Search</button>
+          </div>
+  </div>
+  <div class="w3-container">
+          <div class="w3-quarter">
+              <form action="" method="post" enctype="multipart/form-data" id="film_in_collection_form">
+                  <input type="hidden" value="" id="film_in_collection_json" name="film_in_collection_json">
+              </form>
+                <br>
+              <button id="film_in_collection_submit" type="button">Apply</button>
+          </div>
+  </div>
+  <br/>
+
+{% include "root_footer.html" %}

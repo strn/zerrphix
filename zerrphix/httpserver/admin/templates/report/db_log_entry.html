@@ -1,0 +1,33 @@
+{% include "root_header_begin.html" %}
+{% include "header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "root_sidebar_start.html" %}
+{% include "root_sidebar_main.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>Welcome to Zerrphix Admin</b></h5>
+  </header>
+    <div class="w3-row-padding ">
+    <div class="w3-full">
+      <div class="w3-container ">
+          <p><b>Level</b>: {{ db_log_dict['level'] }}</p>
+          <p><b>Issue</b>: {{ db_log_dict['text'] }}</p>
+          <p><b>Traceback</b>: {% if db_log_dict['traceback'] is iterable %}
+              {% for line in db_log_dict['traceback'] %}
+                  {{ line }}<br>
+              {% endfor %}
+              {% else %}
+                                    {{ db_log_dict['traceback'] }}
+              {% endif %}
+          </p>
+          <p><b>First Occurance *</b>: {{ db_log_dict['first_occurance'] }}</p>
+          <p><b>Last Occurance</b>: {{ db_log_dict['last_occurance'] }}</p>
+          <p>* Within the last 24 hours</p>
+      </div>
+    </div>
+    </div>
+
+{% include "root_footer.html" %}

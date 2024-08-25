@@ -1,0 +1,22 @@
+
+    <a href="/tv/{{ zp_tv_id }}/season" class="w3-bar-item w3-button w3-padding w3-light-blue">
+        <i class="fa fa-table fa-fw"></i>  Seasons/Series</a>
+    {% for season in season_list %}
+    <a href="/tv/{{zp_tv_id}}/{{ season }}/summary" class="w3-bar-item w3-button w3-padding w3-lime"><i class="fa fa-home fa-fw"></i>  Season {{ season }}</a>
+        {% if season == selected_season %}
+            {% for episode in episode_list %}
+            <a href="/tv/{{zp_tv_id}}/{{ season }}/{{ episode }}/summary" class="w3-bar-item w3-button w3-padding w3-blue-grey"><i class="fa fa-home fa-fw"></i>  Episode {{ episode }}</a>
+
+                {% if episode == selected_episode %}
+                      <a href="/tv/{{ zp_tv_id }}/{{ selected_season }}/{{ selected_episode }}/summary" class="w3-bar-item w3-button w3-padding w3-khaki">
+        <i class="fa fa-list-alt fa-fw"></i>  Episode Summary</a>
+    <a href="/tv/{{ zp_tv_id }}/{{ season }}/{{ episode }}/title" class="w3-bar-item w3-button w3-padding w3-sand">
+        <i class="fa fa-text-width fa-fw"></i>  Title</a>
+    <a href="/tv/{{ zp_tv_id }}/{{ season }}/{{ episode }}/overview" class="w3-bar-item w3-button w3-padding w3-sand">
+        <i class="fa fa-file-text-o fa-fw"></i>  Overview</a>
+    <a href="/tv/{{ zp_tv_id }}/{{ season }}/{{ episode }}/screenshot" class="w3-bar-item w3-button w3-padding w3-sand">
+        <i class="fa fa-file-image-o fa-fw"></i>  Screen Shot</a>
+                {% endif %}
+        {% endfor %}
+        {% endif %}
+    {% endfor %}

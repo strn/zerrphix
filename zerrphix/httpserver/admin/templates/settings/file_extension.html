@@ -1,0 +1,77 @@
+{% include "root_header_begin.html" %}
+{% include "settings/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "settings/sidebar_start.html" %}
+{% include "settings/sidebar_file_extension.html" %}
+{% include "settings/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Settings</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for file_extension_key in file_extension_keys %}
+                        <td>{{ file_extension_title_dict[file_extension_key] }}</td>
+                    {% endfor %}
+                </tr>
+                    <tr>
+                        {% for file_extension_key in file_extension_keys %}
+                            <td>
+                                {% if file_extension_key in file_extension_edit_dict %}
+                                     {% if file_extension_edit_dict[file_extension_key] == 'text' %}
+                                        <input id="{{ file_extension_key }}"
+                                               name="{{ file_extension_key }}"
+                                               type="text" value="" size="30">
+                                     {% endif %}
+                                {% else %}
+                                    {{ file_extension_dict[file_extension_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+            </table>
+            <br>
+            <input type="hidden" name="type" value="add">
+            <input type="submit" value="ADD">
+            </form>
+            <br>
+            <br>
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for file_extension_key in file_extension_keys %}
+                        <td>{{ file_extension_title_dict[file_extension_key] }}</td>
+                    {% endfor %}
+                </tr>
+                    {% for file_extension_dict in file_extension_list %}
+                    <tr>
+                        {% for file_extension_key in file_extension_keys %}
+                            <td>
+                                {% if file_extension_key in file_extension_edit_dict %}
+                                     {% if file_extension_edit_dict[file_extension_key] == 'text' %}
+                                        <input id="{{ file_extension_dict['zp_file_extension_id'] }}_{{ file_extension_key }}"
+                                               name="{{ file_extension_dict['zp_file_extension_id'] }}_{{ file_extension_key }}"
+                                               type="text" value="{{ file_extension_dict[file_extension_key] }}" size="30">
+                                     {% endif %}
+                                {% else %}
+                                    {{ file_extension_dict[file_extension_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+            </table>
+            <br>
+            <input type="hidden" name="type" value="edit">
+            <input type="submit" value="Apply">
+            </form>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

@@ -1,0 +1,40 @@
+{% include "root_header_begin.html" %}
+{% include "tv/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "tv/sidebar_start.html" %}
+{% include "tv/sidebar_index.html" %}
+{% include "tv/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>TV Shows</b></h5>
+  </header>
+  <div class="w3-container">
+          <div class="w3-full">
+              Search for a Show <input type="text" size="25" id="search_text"
+                                       value="">&nbsp;<button id="search_button" type="button">
+                  Search</button>
+          <br><br>
+              <h5>Select a show to view/edit</h5>
+              <p>Sort By: <a href="{{ base_link }}?page=1&limit=50&sort_type=added_desc">Added Descending</a>
+                  | <a href="{{ base_link }}?page=1&limit=50&sort_type=added_asc">Added Ascending</a>
+                  | <a href="{{ base_link }}?page=1&limit=50&sort_type=alpha_asc">Title Ascending</a>
+                  | <a href="{{ base_link }}?page=1&limit=50&sort_type=alpha_desc">Title Descending</a>
+              </p>
+          {% include "pagination.html" %}
+          <br><br>
+              <select id="tv_select" size="25">
+                  {% for tv in tvs %}
+                      <option value="{{ tv.id }}">{{ tv.title }}</option>
+                  {% endfor %}
+              </select>
+              <p id="search_result_warning"></p>
+              <p id="search_result_error"></p>
+
+          {% include "pagination.html" %}
+          </div>
+  </div><br>
+
+{% include "root_footer.html" %}

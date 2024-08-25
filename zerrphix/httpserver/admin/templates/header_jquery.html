@@ -1,0 +1,245 @@
+<script>
+$(document).ready(function(){
+    //film
+    (function pollfilms_awating_data_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/films_awating_data_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#films_awating_data_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollfilms_awating_data_count()}, 10000)
+        });
+    })();
+    (function pollfilms_awating_image_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/films_awating_images_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#films_awating_image_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollfilms_awating_image_count()}, 10000)
+        });
+    })();
+    (function pollfilms_awating_icon_artwork_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/films_awating_icon_artwork_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#films_awating_icon_artwork_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollfilms_awating_icon_artwork_count()}, 10000)
+        });
+    })();
+    (function pollfilms_awating_synopsis_artwork_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/films_awating_synopsis_artwork_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#films_awating_synopsis_artwork_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollfilms_awating_synopsis_artwork_count()}, 10000)
+        });
+    })();
+    (function pollfilms_unidentified_no_retry_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/films_unidentified_no_retry_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#films_unidentified_no_retry_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollfilms_unidentified_no_retry_count()}, 10000)
+        });
+    })();
+    (function pollfilms_unidentified_retry_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/films_unidentified_retry_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#films_unidentified_retry_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollfilms_unidentified_retry_count()}, 10000)
+        });
+    })();
+    (function pollfilm_current_library_process_running() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/film_current_library_process_running',
+            success: function(data){
+                   if (data.status === 'success'){
+                       $('#film_current_library_process').text(data.data.process);
+                       $('#film_current_library_process_state').text(data.data.process_state);
+                       $('#film_current_library_process_running_datetime').text(data.data.date_time);
+                    }
+               },
+            complete: setTimeout(function() {pollfilm_current_library_process_running()}, 5000)
+        });
+    })();
+    (function pollfilms_invalid_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/films_invalid_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#films_invalid_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollfilms_invalid_count()}, 10000)
+        });
+    })();
+
+
+
+
+
+
+    //shows
+    (function pollshows_awating_data_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/shows_awating_data_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#shows_awating_data_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollshows_awating_data_count()}, 10000)
+        });
+    })();
+    (function pollshows_awating_data_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/shows_awating_images_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#shows_awating_image_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollshows_awating_data_count()}, 10000)
+        });
+    })();
+    (function pollshows_awating_icon_artwork_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/shows_awating_icon_artwork_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#shows_awating_icon_artwork_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollshows_awating_icon_artwork_count()}, 10000)
+        });
+    })();
+    (function pollshows_awating_synopsis_artwork_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/shows_awating_synopsis_artwork_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#shows_awating_synopsis_artwork_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollshows_awating_synopsis_artwork_count()}, 10000)
+        });
+    })();
+    (function pollshows_unidentified_no_retry_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/shows_unidentified_no_retry_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#shows_unidentified_no_retry_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollshows_unidentified_no_retry_count()}, 10000)
+        });
+    })();
+    (function pollshows_unidentified_retry_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/shows_unidentified_retry_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#shows_unidentified_retry_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollshows_unidentified_retry_count()}, 10000)
+        });
+    })();
+    (function pollshow_current_library_process_running() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/show_current_library_process_running',
+            success: function(data){
+                   if (data.status === 'success'){
+                       $('#show_current_library_process').text(data.data.process);
+                       $('#show_current_library_process_state').text(data.data.process_state);
+                       $('#show_current_library_process_running_datetime').text(data.data.date_time);
+                    }
+               },
+            complete: setTimeout(function() {pollshow_current_library_process_running()}, 5000)
+        });
+    })();
+    (function pollshows_invalid_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/shows_invalid_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#shows_invalid_count').text(data.data.count)
+                    }
+               },
+            complete: setTimeout(function() {pollshows_invalid_count()}, 10000)
+        });
+    })();
+
+
+
+
+    (function pollissue_count() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/issue_count',
+            success: function(data){
+                   if (data.status === 'success'){
+                        $('#fatal').text(
+                            '[Fatal] H: ' + data.data.fatal_hour + ' D: ' + data.data.fatal_day + ' W: ' + data.data.fatal_week
+                        );
+                        $('#exceptions').text(
+                            '[Exceptions] H: ' + data.data.exception_hour + ' D: ' + data.data.exception_day + ' W: ' + data.data.exception_week);
+                        $('#errors').text(
+                            '[Errors] H: ' + data.data.error_hour + ' D: ' + data.data.error_day + ' W: ' + data.data.error_week);
+                        $('#warnings').text(
+                            '[Warnings] H: ' + data.data.warning_hour + ' D: ' + data.data.warning_day + ' W: ' + data.data.warning_week)
+                    }
+               },
+            complete: setTimeout(function() {pollissue_count()}, 10000)
+        });
+    })();
+    (function pollds_avail() {
+        $.ajax({ // this is a json object inside the function
+            dataType: 'json',
+            url: '/api/1/free_space',
+            success: function(data){
+                   if (data.status === 'success'){
+                       $('#avail_download').text('Download folder available space: ' + data.data.downloaded_images_avail_space);
+                       $('#avail_render').text('Render folder available space: ' + data.data.rendered_image_avail_space);
+                   }
+               },
+            complete: setTimeout(function() {pollds_avail()}, 10000)
+        });
+    })();
+});
+</script>

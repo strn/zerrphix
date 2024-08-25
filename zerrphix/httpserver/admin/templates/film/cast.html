@@ -1,0 +1,58 @@
+{% include "root_header_begin.html" %}
+{% include "film/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "film/sidebar_start.html" %}
+{% include "film/sidebar_film_selected.html" %}
+{% include "film/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>{{ film_title }} - Cast</b></h5>
+  </header>
+
+  <div class="w3-container">
+          <div class="w3-quarter">
+              <h5>Cast</h5>
+              <select id="actor_select" multiple="multiple" size="10">
+                  {% for actor in film_cast %}
+                      <option value="{{ actor.id }}">{{ actor.name }}</option>
+                  {% endfor %}
+              </select>
+              <br/>
+              <button id="actor_button" type="button" >Remove Actor(s) from film</button>
+          </div>
+          <div class="w3-quarter">
+              <h5>Actors</h5>
+                  <select id="person_select" multiple="multiple" size="10">
+                  </select>
+              <br/>
+              <button id="person_button" type="button">
+                  Add actor(s) to film</button>
+          </div>
+          <div class="w3-quarter">
+              <h5>Search for Actor</h5>
+              <input type="text" size="25" id="name" value="">
+              <br/>
+              <br/>
+              <button id="search_for_actor" type="button">
+                  Search</button>
+              <p id="search_result_warning"></p>
+              <p id="search_result_error"></p>
+          </div>
+  </div>
+  <div class="w3-container">
+          <div class="w3-quarter">
+              <form action="" method="post" enctype="multipart/form-data" id="cform">
+                  <input type="hidden" value="" id="film_actor_json" name="film_actor_json">
+              </form>
+                <br>
+              <button id="cformsubmit" type="button">Apply</button>
+          </div>
+  </div>
+
+
+  <br/>
+
+{% include "root_footer.html" %}

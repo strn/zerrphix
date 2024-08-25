@@ -1,0 +1,2 @@
+class GetConfigPath(Exception):
+    pass

@@ -1,0 +1,28 @@
+{% include "root_header_begin.html" %}
+{% include "tv/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "tv/sidebar_start.html" %}
+{% include "tv/sidebar_season.html" %}
+{% include "tv/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b><a href="/tv/{{ zp_tv_id }}/summary">{{ tv_title }}</a> - <a href="/tv/{{ zp_tv_id }}/{{ selected_season }}/summary">
+          Season {{ selected_season }}</a> - Summary</b></h5>
+  </header>
+  <div class="w3-container">
+    <div class="w3-container">
+        <a href="/tv/{{ zp_tv_id }}/{{ selected_season }}/poster"><p><b>Raw Poster Image</b></p>
+            <div class="w3-quarter">
+                <div class="w3-container w3-green w3-padding-16">
+                    <img src="/i/raw/tv/season/{{ tv_season_poster_raw_image_id }}">
+                </div>
+            </div>
+        </a>
+    </div>
+  </div>
+  <br/>
+
+{% include "root_footer.html" %}

@@ -1,0 +1,15 @@
+<!-- Sidebar/menu
+add  w3-animate-left to nav class to add the animation of sidebar
+-->
+<nav class="w3-sidebar w3-collapse w3-white" style="z-index:3;width:300px;" id="mySidebar"><br>
+    {% if current_user.is_authenticated %}
+  <div class="w3-container w3-row">
+    <div class="w3-col w3-bar" style="text-align: center;">
+      <span>Current USER: <strong>{{ current_user.username }}</strong></span>
+    </div>
+  </div>
+  <hr>
+    {% endif %}
+  <div class="w3-container">
+    <h5>Dashboard</h5>
+  </div>

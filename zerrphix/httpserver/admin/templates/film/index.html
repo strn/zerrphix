@@ -1,0 +1,38 @@
+{% include "root_header_begin.html" %}
+{% include "film/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "film/sidebar_start.html" %}
+{% include "film/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>Films</b></h5>
+  </header>
+  <div class="w3-container">
+          <div class="w3-full">
+              Search for a film <input type="text" size="25" id="search_text"
+                                        value="">&nbsp;<button id="search_for_film" type="button">
+                  Search</button></h5>
+          <br><br>
+              <h5>Select a film to view/edit</h5>
+              <p>Sort By: <a href="{{ base_link }}?page=1&limit=50&sort_type=added_desc">Added Descending</a>
+                  | <a href="{{ base_link }}?page=1&limit=50&sort_type=added_asc">Added Ascending</a>
+                  | <a href="{{ base_link }}?page=1&limit=50&sort_type=alpha_asc">Title Ascending</a>
+                  | <a href="{{ base_link }}?page=1&limit=50&sort_type=alpha_desc">Title Descending</a>
+              </p>
+          {% include "pagination.html" %}
+          <br><br>
+              <select id="film_select" size="25">
+                  {% for film in films %}
+                      <option value="{{ film.id }}">{{ film.title }}</option>
+                  {% endfor %}
+              </select>
+              <p id="search_result_warning"></p>
+              <p id="search_result_error"></p>
+          {% include "pagination.html" %}
+          </div>
+  </div><br>
+
+{% include "root_footer.html" %}

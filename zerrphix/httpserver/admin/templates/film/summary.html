@@ -1,0 +1,64 @@
+{% include "root_header_begin.html" %}
+{% include "film/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "film/sidebar_start.html" %}
+{% include "film/sidebar_film_selected.html" %}
+{% include "film/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+        <h5><b>{{ film_title }} - Summary</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <p><a href="/film/{{ zp_film_id }}/title"><b>Title:</b></a> {{ film_title }}</p>
+            <p><a href="/film/{{ zp_film_id }}/genre"><b>Genres:</b></a> {{ film_genre_name_list }}</p>
+            <p><a href="/film/{{ zp_film_id }}/rating"><b>Rating:</b></a> {{ film_rating }}</p>
+            <p><a href="/film/{{ zp_film_id }}/overview"><b>Overview:</b></a> {{ film_overview }}</p>
+            <p><a href="/film/{{ zp_film_id }}/cast"><b>Cast:</b></a> {{ film_cast_name_list }}</p>
+            <p><a href="/film/{{ zp_film_id }}/crew"><b>Crew:</b></a> in progress</p>
+            <p><b>Path:</b> {{ film_path }}</p>
+            <p><a href="/film/{{ zp_film_id }}/reIdentify">Re-Identify</a></p>
+        </div>
+    </div>
+    <div class="w3-container">
+        <a href="/film/{{ zp_film_id }}/poster"><p><b>Raw Poster Image</b></p>
+            <div class="w3-quarter">
+                <div class="w3-container w3-padding-16">
+                    <img src="/i/raw/film/{{ film_poster_raw_image_id }}">
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="w3-container">
+        <a href="/film/{{ zp_film_id }}/backdrop">
+            <p><b>Raw Backdrop Image</b></p>
+            <div class="w3-threequarter">
+                <div class="w3-container w3-padding-16">
+                    <img src="/i/raw/film/{{ film_backdrop_raw_image_id }}">
+                </div>
+            </div>
+        </a>
+    </div>
+    {% for zp_image_type_id in render_templates_display_dict|sort %}
+        {% for zp_icon_sub_type_id in render_templates_display_dict[zp_image_type_id]['icon_sub_type_list']|sort %}
+            <div class="w3-container">
+                <a href="/i/rendered/film/{{ render_templates_display_dict[zp_image_type_id]['icon_sub_type_list'][zp_icon_sub_type_id]['render_hash_id'] }}">
+                <p>Rendered {{ render_templates_display_dict[zp_image_type_id]['name'] }} Image - Sub Type ID {{ zp_icon_sub_type_id }}</p>
+                    <div class="w3-twothird">
+                        <div class="w3-container w3-padding-16">
+                            <img src="/i/rendered/film/{{ render_templates_display_dict[zp_image_type_id]['icon_sub_type_list'][zp_icon_sub_type_id]['render_hash_id'] }}">
+                        </div>
+                    </div>
+                </a>
+                <br>
+            </div>
+            <div class="w3-container">
+                <p><a href="/film/{{ zp_film_id }}/{{  render_templates_display_dict[zp_image_type_id]['name'] }}/{{ zp_icon_sub_type_id }}/render">Live Render</a></p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <br>
+{% include "root_footer.html" %}

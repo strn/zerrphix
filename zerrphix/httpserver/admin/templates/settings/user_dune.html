@@ -1,0 +1,50 @@
+{% include "root_header_begin.html" %}
+{% include "settings/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "settings/sidebar_start.html" %}
+{% include "settings/sidebar_user.html" %}
+{% include "settings/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>User Dune Assigments</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <form action="" method="post" id="dune_add" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    <td>Username</td>
+                    {% for dune_key in dune_keys %}
+                        <td>{{ dune_title_dict[dune_key] }}</td>
+                    {% endfor %}
+                </tr>
+                    {% for user in user_dict %}
+                        <tr>
+                        <td>{{ user_dict[user]['username'] }}</td>
+                        {% for dune in dune_list %}
+                            <td>
+                            {% set checked = false %}
+                            {% if dune['id'] in dune_assigment_dict %}
+                                {% if user in dune_assigment_dict[dune['id']] %}
+                                    {% set checked = true %}
+                                {% endif %}
+                            {% endif %}
+                            <input type="checkbox" name="{{ user }}_{{ dune['id'] }}"
+                            {{ 'checked' if checked == true }}
+                            value="">
+                            </td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+            </table>
+            <br>
+            <input type="hidden" name="type" value="edit">
+            <input type="submit" value="Apply">
+            </form>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

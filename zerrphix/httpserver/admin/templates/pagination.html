@@ -1,0 +1,51 @@
+
+                <div class="pagination">
+                    {% if page == 1 %}
+                        <a href="#">&laquo;</a>
+                        <a href="{{ base_link }}?page=1&limit={{ limit }}&sort_type={{ sort_type }}" class="active">1</a>
+                    {% else %}
+                        <a href="{{ base_link }}?page={{ page - 1 }}&limit={{ limit }}&sort_type={{ sort_type }}">&laquo;</a>
+                        <a href="{{ base_link }}?page=1&limit={{ limit }}&sort_type={{ sort_type }}">1</a>
+                    {% endif %}
+
+                    {% if links is divisibleby 2 %}
+                        {% set link_pre = (links/2)|int %}
+                        {% set link_post = (links/2)|int %}
+                    {% else %}
+                        {% set link_pre = (links/2)|round(0, 'floor')|int %}
+                        {% set link_post = (links/2)|round(0, 'ceil')|int %}
+                    {% endif %}
+
+                    {% if page - link_pre > 1 and page + link_post <= last_page %}
+                        {% set place = 1 %}
+                        {% set range_start = page - link_pre %}
+                        {% set range_end = page + link_post %}
+                    {% elif page + link_pre >= last_page %}
+                        {% set place = 2 %}
+                        {% set range_start = last_page - links %}
+                        {% set range_end = last_page %}
+                    {% else %}
+                        {% set place = 3 %}
+                        {% set range_start = 2 %}
+                        {% set range_end = links + 2 %}
+                    {% endif %}
+
+                    {% for n in range(range_start, range_end) %}
+                        {% if n < last_page and n > 1 %}
+                            {% if page == n %}
+                                <a href="{{ base_link }}?page={{ n }}&limit={{ limit }}&sort_type={{ sort_type }}" class="active">{{ n }}</a>
+                            {% else %}
+                                <a href="{{ base_link }}?page={{ n }}&limit={{ limit }}&sort_type={{ sort_type }}">{{ n }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page == last_page %}
+                        <a href="{{ base_link }}?page={{ last_page }}&limit={{ limit }}&sort_type={{ sort_type }}" class="active">{{ last_page }}</a>
+                        <a href="#">&raquo;</a>
+                    {% else %}
+                        <a href="{{ base_link }}?page={{ last_page }}&limit={{ limit }}&sort_type={{ sort_type }}">{{ last_page }}</a>
+                        {# <a href="{{ base_link }}/{{ page + 1 }}/{{ limit }}">&raquo; {{ range_start }} - {{ range_end }} - {{ place }} - {{ link_pre }} = {{ link_post }}</a> #}
+                        <a href="{{ base_link }}?page={{ page + 1 }}&limit={{ limit }}&sort_type={{ sort_type }}">&raquo;</a>
+                    {% endif %}
+                </div>

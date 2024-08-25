@@ -1,0 +1,96 @@
+{% include "root_header_begin.html" %}
+{% include "dunes/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "dunes/sidebar_start.html" %}
+{% include "dunes/sidebar_main.html" %}
+{% include "dunes/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Dune Assignable Shares</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for share_xref_key in share_xref_keys %}
+                        <td>{{ share_xref_title_dict[share_xref_key] }}</td>
+                    {% endfor %}
+                </tr>
+                    <tr>
+                        {% for share_xref_key in share_xref_keys %}
+                            <td>
+                                {% if share_xref_key in share_xref_edit_dict %}
+                                     {% if share_xref_edit_dict[share_xref_key] == 'text' %}
+                                        <input id="{{ share_xref_key }}"
+                                               name="{{ share_xref_key }}"
+                                               type="text" value="" size="30">
+                                     {% elif share_xref_edit_dict[share_xref_key] == 'select' %}
+                                        <select id="{{ share_xref_key }}"
+                                        name="{{ share_xref_key }}">
+                                            {% for select_key in share_xref_select_dict[share_xref_key]|sort %}
+                                                    <option value="{{ select_key }}">
+                                                    {{ share_xref_select_dict[share_xref_key][select_key]['name'] }}
+                                                    </option>
+                                            {% endfor %}
+                                        </select>
+                                     {% endif %}
+                                {% else %}
+                                    {{ share_xref_dict[share_xref_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+            </table>
+            <br>
+            <input type="hidden" name="type" value="add">
+            <input type="submit" value="ADD">
+            </form>
+            <br>
+            <br>
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for share_xref_key in share_xref_keys %}
+                        <td>{{ share_xref_title_dict[share_xref_key] }}</td>
+                    {% endfor %}
+                </tr>
+                    {% for share_xref_dict in share_xref_list %}
+                    <tr>
+                        {% for share_xref_key in share_xref_keys %}
+                            <td>
+                                {% if share_xref_key in share_xref_edit_dict %}
+                                     {% if share_xref_edit_dict[share_xref_key] == 'text' %}
+                                        <input id="{{ share_xref_dict['zp_share_xref_id'] }}_{{ share_xref_key }}"
+                                               name="{{ share_xref_dict['zp_share_xref_id'] }}_{{ share_xref_key }}"
+                                               type="text" value="{{ share_xref_dict[share_xref_key] }}" size="30">
+                                     {% elif share_xref_edit_dict[share_xref_key] == 'select' %}
+                                        <select id="{{ share_xref_dict['zp_share_xref_id'] }}_{{ share_xref_key }}"
+                                        name="{{ share_xref_dict['zp_share_xref_id'] }}_{{ share_xref_key }}">
+                                            {% for select_key in share_xref_select_dict[share_xref_key]|sort %}
+                                                    <option value="{{ select_key }}"
+                                                            {% if share_xref_dict[share_xref_key] == select_key %} selected {% endif %}>
+                                                    {{ share_xref_select_dict[share_xref_key][select_key]['name'] }}
+                                                    </option>
+                                            {% endfor %}
+                                        </select>
+                                     {% endif %}
+                                {% else %}
+                                    {{ share_xref_dict[share_xref_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+            </table>
+            <br>
+            <input type="hidden" name="type" value="edit">
+            <input type="submit" value="Apply">
+            </form>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

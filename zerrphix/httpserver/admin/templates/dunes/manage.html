@@ -1,0 +1,61 @@
+{% include "root_header_begin.html" %}
+{% include "dunes/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "dunes/sidebar_start.html" %}
+{% include "dunes/sidebar_main.html" %}
+{% include "dunes/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Dune - {{ dune_name }} - Manage</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+        <p>UI Store</p>
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for ui_store_key in ui_store_keys %}
+                        <td>{{ ui_store_title_dict[ui_store_key] }}</td>
+                    {% endfor %}
+                </tr>
+                    <tr>
+                        {% for ui_store_key in ui_store_keys %}
+                            <td>
+                                {% if ui_store_key in ui_store_edit_dict %}
+                                     {% if ui_store_edit_dict[ui_store_key] == 'text' %}
+                                        <input id="{{ ui_store_key }}"
+                                               name="{{ ui_store_key }}"
+                                               type="text" value="{{ ui_store_dict[ui_store_key] }}" size="30">
+                                     {% elif ui_store_edit_dict[ui_store_key] == 'select' %}
+                                        <select id="{{ ui_store_key }}"
+                                        name="{{ ui_store_key }}">
+                                            {% for share_xref_key in ui_store_select_dict[ui_store_key]|sort %}
+                                                    <option value="{{ share_xref_key }}"
+                                                            {% if share_xref_key == ui_store_dict[ui_store_key] %} selected {% endif %}>
+
+                                                {% if share_xref_key > 0 %}
+                                                    Share:{{ share_dict[ui_store_select_dict[ui_store_key][share_xref_key]['zp_share_id']]['name']}} Server:{{share_server_dict[ui_store_select_dict[ui_store_key][share_xref_key]['zp_share_server_id']]['name']}} Cred:{{ share_credential_dict[ui_store_select_dict[ui_store_key][share_xref_key]['zp_share_credential_id']]['name'] }}
+                                                    {% else %}
+                                                        Choose
+                                                    {% endif %}
+                                                    </option>
+                                            {% endfor %}
+                                        </select>
+                                     {% endif %}
+                                {% else %}
+                                    {{ ui_store_dict[ui_store_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+            </table>
+            <br>
+            <input type="submit" value="Apply">
+            </form>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

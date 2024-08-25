@@ -1,0 +1,48 @@
+{% include "root_header_begin.html" %}
+{% include "tv/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "tv/sidebar_start.html" %}
+{% include "tv/sidebar_selected.html" %}
+{% include "tv/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>{{ tv_title }} - Genres</b></h5>
+  </header>
+  <div class="w3-container">
+          <div class="w3-quarter">
+              <h5>Film Genres</h5>
+                  <select id="tv_genre_select" multiple="multiple" size="10">
+                      {% for genre in tv_genres %}
+                          <option value="{{ genre.id }}">{{ genre.name }}</option>
+                      {% endfor %}
+                  </select>
+              <br/>
+              <button id="tv_genre_button" type="button">
+                  Remove genre(s) from tv!</button>
+          </div>
+          <div class="w3-quarter">
+              <h5>Genres available to add</h5>
+              <select id="genre_select" multiple="multiple" size="10">
+                  {% for genre in genres %}
+                      <option value="{{ genre.id }}">{{ genre.name }}</option>
+                  {% endfor %}
+              </select>
+              <br/>
+              <button id="genre_button" type="button" >Add genre(s) to tv</button>
+          </div>
+  </div>
+  <div class="w3-container">
+          <div class="w3-quarter">
+              <form action="" method="post" enctype="multipart/form-data" id="form">
+                  <input type="hidden" value="" id="tv_genre_list" name="tv_genre_list">
+              </form>
+                <br>
+              <button id="formsubmit" type="button">Apply</button>
+          </div>
+  </div>
+  <br/>
+
+{% include "root_footer.html" %}

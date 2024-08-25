@@ -1,0 +1,104 @@
+{% include "root_header_begin.html" %}
+{% include "settings/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "settings/sidebar_start.html" %}
+{% include "settings/sidebar_user.html" %}
+{% include "settings/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Users</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <form action="" method="post" id="user_add" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for user_key in user_keys %}
+                        <td>{{ user_title_dict[user_key] }}</td>
+                    {% endfor %}
+                </tr>
+                    <tr>
+                        {% for user_key in user_keys %}
+                            <td>
+                                {% if user_key in user_add_dict %}
+                                     {% if user_add_dict[user_key] == 'text' %}
+                                        <input id="{{ user_key }}" name="{{ user_key }}"
+                                               type="text" value="" size="30">
+                                     {% elif user_add_dict[user_key] == 'password' %}
+                                        <input id="{{ user_key }}" name="{{ user_key }}"
+                                               type="password" value="" size="30">
+                                     {% elif  user_add_dict[user_key] == 'select' %}
+                                         <select id="{{ user_key }}" name="{{ user_key }}">
+                                            {% for option in select_dict[user_key] %}
+                                                <option value="{{ option['id'] }}">
+                                                    {{ option['ref_name'] }}
+                                                </option>
+                                            {% endfor %}
+                                         </select>
+                                     {% endif %}
+                                {% else %}
+                                    {{ user_dict[user_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+            </table>
+            <br>
+            <input type="hidden" name="type" value="add">
+            <input type="submit" value="ADD">
+            </form>
+        </div>
+    </div><br>
+    <div class="w3-container">
+        <div class="w3-full">
+            <form action="" method="post" id="user_add" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for user_key in user_keys %}
+                        <td>{{ user_title_dict[user_key] }}</td>
+                    {% endfor %}
+                </tr>
+                {% for user in user_dict %}
+                    <tr>
+                        {% for user_key in user_keys %}
+                            <td>
+                                {% if user_key in user_edit_dict %}
+                                     {% if user_edit_dict[user_key] == 'text' %}
+                                        <input id="{{ user }}_{{ user_key }}" name="{{ user }}_{{ user_key }}"
+                                               type="text" value="{{ user_dict[user][user_key] }}" size="30">
+                                     {% elif user_edit_dict[user_key] == 'password' %}
+                                        <input id="{{ user }}_{{ user_key }}" name="{{ user }}_{{ user_key }}"
+                                               type="password" value="" size="30">
+                                     {% elif  user_edit_dict[user_key] == 'select' %}
+                                         <select id="{{ user }}_{{ user_key }}" name="{{ user }}_{{ user_key }}">
+                                            {% for option in select_dict[user_key] %}
+                                                <option value="{{ option['id'] }}"
+                                                {% if option['id'] == user_dict[user][user_key] %}
+                                                        selected
+                                                {% endif %}
+                                                >
+                                                    {{ option['ref_name'] }}
+                                                </option>
+                                            {% endfor %}
+                                         </select>
+                                     {% endif %}
+                                {% else %}
+                                    {{ user_dict[user][user_key] }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+            <input type="hidden" name="type" value="edit">
+            <input type="submit" value="Apply">
+            </form>
+        <br>
+        </div>
+    </div>
+
+{% include "root_footer.html" %}

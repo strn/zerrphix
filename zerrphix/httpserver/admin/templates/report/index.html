@@ -1,0 +1,56 @@
+{% include "root_header_begin.html" %}
+{% include "header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "root_sidebar_start.html" %}
+{% include "root_sidebar_main.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>Welcome to Zerrphix Admin</b></h5>
+  </header>
+    <div class="w3-row-padding ">
+    <div class="w3-quarter">
+      <div class="w3-container ">
+          <h3>Fatal Exceptions (Essentially a Thread Restart)</h3>
+          <p>Last Hour: {{ issue_count_dict['fatal_hour'] }}, Last Day: {{ issue_count_dict['fatal_day'] }}, Last Week: {{ issue_count_dict['fatal_week'] }}</p>
+          {% for fatal_exception in fatal_exception_list %}
+              <p>DateTime: {{ fatal_exception['datetime'] }} - <a href="/report/{{ fatal_exception['epoch'] }}/{{ fatal_exception['source_id'] }}">
+              {{ fatal_exception['description'] }}</a></p>
+          {% endfor %}
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container">
+          <h3>Non-Fatal Exceptions (No Thread Restart)</h3>
+          <p>Last Hour: {{ issue_count_dict['exception_hour'] }}, Last Day: {{ issue_count_dict['exception_day'] }}, Last Week: {{ issue_count_dict['exception_week'] }}</p>
+          {% for exception in exception_list %}
+              <p>DateTime: {{ exception['datetime'] }} - <a href="/report/{{ exception['epoch'] }}/{{ exception['source_id'] }}">
+                  {{ exception['description'] }}</a></p>
+          {% endfor %}
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container ">
+          <h3>Errors</h3>
+          <p>Last Hour: {{ issue_count_dict['error_hour'] }}, Last Day: {{ issue_count_dict['error_day'] }}, Last Week: {{ issue_count_dict['error_week'] }}</p>
+          {% for error in error_list %}
+              <p>DateTime: {{ error['datetime'] }} - <a href="/report/{{ error['epoch'] }}/{{ error['source_id'] }}">
+                  {{ error['description'] }}</a></p>
+          {% endfor %}
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container ">
+          <h3>Warnings</h3>
+          <p>Last Hour: {{ issue_count_dict['warning_hour'] }}, Last Day: {{ issue_count_dict['warning_day'] }}, Last Week: {{ issue_count_dict['warning_week'] }}</p>
+          {% for warning in warning_list %}
+              <p>DateTime: {{ warning['datetime'] }} - <a href="/report/{{ warning['epoch'] }}/{{ warning['source_id'] }}">
+                  {{ warning['description'] }}</a></p>
+          {% endfor %}
+      </div>
+    </div>
+    </div>
+
+{% include "root_footer.html" %}

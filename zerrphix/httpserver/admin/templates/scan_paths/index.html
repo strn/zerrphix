@@ -1,0 +1,262 @@
+{% include "root_header_begin.html" %}
+{% include "scan_paths/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "scan_paths/sidebar_start.html" %}
+{% include "scan_paths/sidebar_main.html" %}
+{% include "scan_paths/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Scan Paths</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <!-- http://divtable.com/generator/ -->
+        <h6><u>Add a scan path</u></h6>
+        <p>
+            Please refer to the Zerrphix user guide for assistance in setting up scan paths.
+        </p>
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+                <table border="1">
+                    <tbody>
+                        <tr>
+                            {% for scan_path_key in scan_path_add_keys %}
+                                <td>{{ scan_path_title_dict[scan_path_key] }}</td>
+                            {% endfor %}
+                        </tr>
+
+                        <tr>
+                            {% for scan_path_key in scan_path_add_keys %}
+                                <td>
+
+                                {% if scan_path_add_dict[scan_path_key] == 'text' %}
+                                    <input id="{{ scan_path_key }}"
+                                           name="{{ scan_path_key }}"
+                                           type="text" value="" size="15">
+                                {% elif scan_path_add_dict[scan_path_key] == 'bool' %}
+                                    <select id="{{ scan_path_key }}"
+                                            name="{{ scan_path_key }}">
+                                    {% if scan_path_key in ['enabled', 'verify', 'force_full_scan'] %}
+                                            <option value="1" selected>Enabled</option>
+                                            <option value="0">Disabled</option>
+                                    {% else %}
+                                            <option value="1">Enabled</option>
+                                            <option value="0" selected>Disabled</option>
+                                    {% endif %}
+                                    </select>
+                                {% elif scan_path_add_dict[scan_path_key] == 'select' %}
+                                    {% if scan_path_key == 'zp_share_id' %}
+                                        <select id="{{ scan_path_key }}"
+                                        name="{{ scan_path_key }}">
+                                            {% for share_key in share_dict|sort %}
+                                                <option value="{{ share_key }}">
+                                                {{ share_dict[share_key]['name'] }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif scan_path_key == 'zp_share_server_id' %}
+                                        <select id="{{ scan_path_key }}"
+                                        name="{{ scan_path_key }}">
+                                            {% for share_server_key in share_server_dict|sort %}
+                                                    <option value="{{ share_server_key }}">
+                                                {{ share_server_dict[share_server_key]['name'] }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif scan_path_key == 'zp_share_credential_id' %}
+                                        <select id="{{ scan_path_key }}"
+                                        name="{{ scan_path_key }}">
+                                            {% for share_credential_key in share_credential_dict|sort %}
+                                                <option value="{{ share_credential_key }}">
+                                                {{ share_credential_dict[share_credential_key]['name'] }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif scan_path_key == 'fs_type' %}
+                                        <select id="{{ scan_path_key }}"
+                                                name="{{ scan_path_key }}">
+                                            {% for share_fs_type_key in share_fs_type_dict|sort %}
+                                                    <option value="{{ share_fs_type_key }}"
+                                                            {% if share_fs_type_key == 2 %} selected {% endif %}
+                                                    >
+                                                    {{ share_fs_type_dict[share_fs_type_key]['name'] }}
+                                                    </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% elif scan_path_key == 'zp_library_id' %}
+                                        <select id="{{ scan_path_key }}"
+                                        name="{{ scan_path_key }}">
+                                            {% for share_library_key in share_library_dict|sort %}
+                                                    <option value="{{ share_library_key }}">
+                                                    {{ share_library_dict[share_library_key]['name'] }}
+                                                    </option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            </td>
+                    </tr>
+                    </tbody>
+                </table>
+            <input type="hidden" value="add" name="type">
+            </form>
+            <br>
+            <button id="test_connection" type="button">Test Connection</button>
+            <br>
+            <b>To enable the add button</b> you must test connection to see if the scan path is correctly configured.
+            The add button will become available even if the scan path is not configured corrrectly. Please make sure to
+            read the output of test connection carefullly.
+            <br>
+            <button id="scan_path_add_form_submit" type="button" disabled>Add</button>&nbsp;
+            <p id="test_message"></p>
+            <p id="test_error"></p>
+
+            <h6><u>Edit a scan path</u></h6>
+            <form action="" method="post" id="scan_path_form" enctype="multipart/form-data">
+                <table border="1">
+                    <tbody>
+                        <tr>
+                            {% for scan_path_key in scan_path_keys %}
+                                <td>{{ scan_path_title_dict[scan_path_key] }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% for scan_path in scan_path_list %}
+                        <tr>
+                            {% for scan_path_key in scan_path_keys %}
+                                <td>
+                                {% if scan_path_key in scan_path_editable_dict %}
+                                    {% if scan_path_editable_dict[scan_path_key] == 'bool' %}
+                                            <select id="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}"
+                                                    name="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}">
+                                                {% if scan_path[scan_path_key] == 1 %}
+                                                    <option value="1" selected>Enabled</option>
+                                                    <option value="0">Disabled</option>
+                                                {% else %}
+                                                    <option value="1">Enabled</option>
+                                                    <option value="0" selected>Disabled</option>
+                                                {% endif %}
+                                            </select>
+                                    {% elif scan_path_editable_dict[scan_path_key] == 'text' %}
+                                            <input id="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}"
+                                                   name="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}"
+                                                   type="text" value="{{ scan_path[scan_path_key] }}" size="15">
+                                    {% elif scan_path_editable_dict[scan_path_key] == 'select' %}
+                                        {% if scan_path_key in ['zp_share_id', 'zp_share_server_id', 'zp_share_credential_id'] %}
+                                            {% if scan_path['fs_type'] == 2 %}
+                                                {% if scan_path_key == 'zp_share_id' %}
+                                                    <select id="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}"
+                                                    name="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}">
+                                                        {% for share_key in share_dict|sort %}
+                                                            {% if share_key == scan_path['zp_share_id'] %}
+                                                                <option value="{{ share_key }}" selected>
+                                                                {{ share_dict[share_key]['name'] }}
+                                                                </option>
+                                                            {% else %}
+                                                                <option value="{{ share_key }}">
+                                                                {{ share_dict[share_key]['name'] }}
+                                                                </option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% elif scan_path_key == 'zp_share_server_id' %}
+                                                    <select id="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}"
+                                                    name="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}">
+                                                        {% for share_server_key in share_server_dict|sort %}
+                                                            {% if share_server_key == scan_path['zp_share_server_id'] %}
+                                                                <option value="{{ share_server_key }}" selected>
+                                                                {{ share_server_dict[share_server_key]['name'] }}
+                                                                </option>
+                                                            {% else %}
+                                                                <option value="{{ share_server_key }}">
+                                                                {{ share_server_dict[share_server_key]['name'] }}
+                                                                </option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% elif scan_path_key == 'zp_share_credential_id' %}
+                                                    <select id="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}"
+                                                    name="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}">
+                                                        {% for share_credential_key in share_credential_dict|sort %}
+                                                            {% if share_credential_key == scan_path['zp_share_credential_id'] %}
+                                                                <option value="{{ share_credential_key }}" selected>
+                                                                {{ share_credential_dict[share_credential_key]['name'] }}
+                                                                </option>
+                                                            {% else %}
+                                                                <option value="{{ share_credential_key }}">
+                                                                {{ share_credential_dict[share_credential_key]['name'] }}
+                                                                </option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                {% endif %}
+                                            {% else %}
+                                                N/A
+                                            {% endif %}
+                                        {% elif scan_path_key == 'fs_type' %}
+                                              <select id="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}"
+                                                    name="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}">
+                                                {% for share_fs_type_key in share_fs_type_dict|sort %}
+                                                    {% if share_fs_type_key == scan_path['fs_type'] %}
+                                                        <option value="{{ share_fs_type_key }}" selected>
+                                                        {{ share_fs_type_dict[share_fs_type_key]['name'] }}
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ share_fs_type_key }}">
+                                                        {{ share_fs_type_dict[share_fs_type_key]['name'] }}
+                                                        </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        {% elif scan_path_key == 'zp_library_id' %}
+                                            <select id="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}"
+                                                    name="{{ scan_path['zp_scan_path_id'] }}_{{ scan_path_key }}">
+                                                {% for share_library_key in share_library_dict|sort %}
+                                                    {% if share_library_key == scan_path['zp_library_id'] %}
+                                                        <option value="{{ share_library_key }}" selected>
+                                                        {{ share_library_dict[share_library_key]['name'] }}
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ share_library_key }}">
+                                                        {{ share_library_dict[share_library_key]['name'] }}
+                                                        </option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        {% endif %}
+                                    {% elif scan_path_key == 'fs_type' %}
+                                        {% if scan_path[scan_path_key] == 1 %}
+                                            local
+                                        {% else %}
+                                            smb
+                                        {% endif %}
+                                    {% else %}
+                                       {{ scan_path[scan_path_key] }}
+                                    {% endif %}
+                                {% else %}
+                                    {% if scan_path_key == 'zp_library_id' %}
+                                        {% if scan_path[scan_path_key] == 1 %}
+                                            Film
+                                        {% else %}
+                                            TV
+                                        {% endif %}
+                                    {% else %}
+                                        {{ scan_path[scan_path_key] }}
+                                    {% endif %}
+                                {% endif %}
+                                        </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            <input type="hidden" value="edit" name="type">
+            </form>
+            <br>
+            <button id="scan_path_form_submit" type="button">Apply Changes</button>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

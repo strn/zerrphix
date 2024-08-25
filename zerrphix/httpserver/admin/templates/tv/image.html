@@ -1,0 +1,36 @@
+{% include "root_header_begin.html" %}
+{% include "tv/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "tv/sidebar_start.html" %}
+{% include "tv/sidebar_selected.html" %}
+{% include "tv/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>{{ tv_title }} - {{ image_type }}</b></h5>
+  </header>
+    {% for raw_image_list in raw_image_group_list %}
+     <div class="w3-row-padding w3-margin-bottom">
+         {% for raw_image in raw_image_list %}
+        <div class="w3-{{ render_type }}">
+            <div class="w3-container {% if user_raw_image_id == raw_image.zp_tv_raw_image_id %} w3-green {% endif %} {% if raw_image.source_type == "eapi" %} w3-blue {% else %} w3-orange {% endif %} w3-padding-16 raw_image"
+                 {% if raw_image.source_type == "eapi" %} type="e" {% endif %} image_id="{{ raw_image.zp_tv_raw_image_id }}">
+                <img src="{{ raw_image.image_url }}">
+             </div>
+        </div>
+         {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="w3-container">
+        <h5>Upload image:</h5>
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileToUpload">
+            <input type="submit" value="Upload Image" name="submit">
+        </form>
+        <br/>
+    </div>
+
+{% include "root_footer.html" %}

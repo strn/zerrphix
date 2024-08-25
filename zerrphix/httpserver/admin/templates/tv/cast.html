@@ -1,0 +1,59 @@
+{% include "root_header_begin.html" %}
+{% include "tv/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "tv/sidebar_start.html" %}
+{% include "tv/sidebar_selected.html" %}
+{% include "tv/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>{{ tv_title }} - Cast</b></h5>
+  </header>
+    {% if 1 in current_user.privileges %}
+  <div class="w3-container">
+          <div class="w3-quarter">
+              <h5>Cast</h5>
+              <select id="actor_select" multiple="multiple" size="10">
+                  {% for actor in tv_cast %}
+                      <option value="{{ actor.id }}">{{ actor.name }}</option>
+                  {% endfor %}
+              </select>
+              <br/>
+              <button id="actor_button" type="button" >Remove Actor(s) from tv</button>
+          </div>
+          <div class="w3-quarter">
+              <h5>Actors</h5>
+                  <select id="person_select" multiple="multiple" size="10">
+                  </select>
+              <br/>
+              <button id="person_button" type="button">
+                  Add actor(s) to tv</button>
+          </div>
+          <div class="w3-quarter">
+              <h5>Name</h5>
+              <input type="text" size="25" id="name" value="">
+              <br/>
+              <br/>
+              <button id="search" type="button">
+                  Search</button>
+          </div>
+  </div>
+  <div class="w3-container">
+          <div class="w3-quarter">
+              <form action="" method="post" enctype="multipart/form-data" id="cform">
+                  <input type="hidden" value="" id="tv_actor_json" name="tv_actor_json">
+              </form>
+                <br>
+              <button id="cformsubmit" type="button">Apply</button>
+          </div>
+  </div>
+    {% else %}
+  <div class="w3-container">
+     <p>You do not have the privalge requried to edit cast</p>
+  </div>
+    {% endif %}
+  <br/>
+
+{% include "root_footer.html" %}

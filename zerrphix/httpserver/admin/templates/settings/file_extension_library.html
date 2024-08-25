@@ -1,0 +1,59 @@
+{% include "root_header_begin.html" %}
+{% include "settings/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "settings/sidebar_start.html" %}
+{% include "settings/sidebar_file_extension.html" %}
+{% include "settings/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>File Extensions - {{ library_dict[library] }}</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-quarter">
+            <form action="" method="post" id="scan_path_add_form" enctype="multipart/form-data">
+                <table border="1">
+                <tr>
+                    {% for file_extension_key in file_extension_keys %}
+                        <td>
+                        {{ file_extension_title_dict[file_extension_key] }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% for file_extension_dict in file_extension_list %}
+                    <tr>
+                    {% for file_extension_key in file_extension_keys %}
+                        <td>
+                        {% if file_extension_key in file_extension_edit_dict %}
+                            {% if file_extension_edit_dict[file_extension_key] == "check" %}
+                                {% if file_extension_key == 'extension' %}
+                                    <input type="checkbox" name="{{ file_extension_dict['zp_file_extension_id'] }}_{{ file_extension_key }}"
+                                              value="{{ file_extension_dict['zp_file_extension_id']  }}"
+                                              {% if file_extension_dict['zp_file_extension_id'] in library_extension_dict %}
+                                                  checked
+                                              {% endif %}
+                                    >  {{ file_extension_dict[file_extension_key] }}
+                                {% else %}
+                                    <input type="checkbox" name="{{ file_extension_dict['zp_file_extension_id'] }}_{{ file_extension_key }}"
+                                              value="{{ file_extension_dict['zp_file_extension_id']  }}"
+                                              {% if file_extension_dict['zp_file_extension_id'] in library_extension_dict and  library_extension_dict[file_extension_dict['zp_file_extension_id']] == 1 %}
+                                                  checked
+                                              {% endif %}
+                                    >  {{ file_extension_dict[file_extension_key] }}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </table>
+            <br>
+            <input type="submit" value="Apply">
+            </form>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

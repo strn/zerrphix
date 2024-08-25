@@ -1,0 +1,5 @@
+            <a href="/tv/{{ zp_tv_id }}/summary" class="w3-bar-item w3-button w3-padding w3-khaki">
+        <i class="fa fa-list-alt fa-fw"></i>  Show Summary</a>
+            {% for season in season_list %}
+    <a href="{{ season }}/summary" class="w3-bar-item w3-button w3-padding w3-lime"><i class="fa fa-home fa-fw"></i>  Season {{ season }}</a>
+    {% endfor %}

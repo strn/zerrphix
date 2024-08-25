@@ -1,0 +1,23 @@
+{% include "root_header_begin.html" %}
+{% include "settings/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "settings/sidebar_start.html" %}
+{% include "settings/sidebar_main.html" %}
+{% include "settings/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Settings</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <p>FILM Allowed Extensions: {{ film_allowed_extensions }}</p>
+            <p>FILM Ignored Extensions: {{ film_ignored_extensions }}</p>
+            <p>TV Allowed Extensions: {{ tv_allowed_extensions }}</p>
+            <p>TV Ignored Extensions: {{ tv_ignored_extensions }}</p>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

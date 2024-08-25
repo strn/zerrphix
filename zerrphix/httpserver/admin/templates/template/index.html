@@ -1,0 +1,90 @@
+{% include "root_header_begin.html" %}
+{% include "template/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "template/sidebar_start.html" %}
+{% include "template/sidebar_main.html" %}
+{% include "template/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Templates</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <form action="" method="post" id="template_add" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for template_key in template_keys %}
+                        <td>{{ template_title_dict[template_key] }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for template_key in template_keys %}
+                        <td>
+                        {% if template_key == 'zip_file' %}
+                            <input type="file" name="{{ template_key }}">
+                        {% elif template_key in template_edit_dict %}
+                            {% if template_edit_dict[template_key] == 'text' %}
+                                <input type="text" value=""
+                                       name="{{ template_key }}">
+                            {% elif template_edit_dict[template_key] == 'lookup' %}
+                                User
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            </table>
+            <br>
+            <input type="hidden" name="type" value="add">
+            <input type="submit" value="ADD">
+            </form>
+        </div>
+    </div><br>
+    <div class="w3-container">
+        <div class="w3-full">
+            <form action="" method="post" id="template_edit" enctype="multipart/form-data">
+            <table border="1">
+                <tr>
+                    {% for template_key in template_keys %}
+                        <td>{{ template_title_dict[template_key] }}</td>
+                    {% endfor %}
+                </tr>
+                    {% for template in template_dict %}
+                        <tr>
+                        {% for template_key in template_keys %}
+                            <td>
+                            {% if template_key == 'zip_file' %}
+                                {% if template_dict[template]['path_type'] > 1 %}
+                                    <input type="file" name="{{ template }}_{{ template_key }}">
+                                {% else %}
+                                    Cannot Update System Templates
+                                {% endif %}
+                            {% else %}
+                                {% if template_key in template_edit_dict %}
+                                    {% if template_edit_dict[template_key] == 'text' %}
+                                        <input type="text" value="{{ template_dict[template][template_key] }}"
+                                               name="{{ template }}_{{ template_key }}">
+                                    {% elif template_edit_dict[template_key] == 'lookup' %}
+                                        {{ template_lookup_dict[template_key][template_dict[template]['path_type']] }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ template_dict[template][template_key] }}
+                                {% endif %}
+                            {% endif %}
+                            </td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+            </table>
+            <br>
+            <input type="hidden" name="type" value="edit">
+            <p>The artwork process will be tiggered when a template is uploaded.</p>
+            <input type="submit" value="Apply">
+            </form>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

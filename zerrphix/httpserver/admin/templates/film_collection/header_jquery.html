@@ -1,0 +1,187 @@
+<script>
+$(document).ready(function(){
+  $(document).on('click', ".raw_image", function () {
+    if (! $(this).hasClass("w3-green") ){
+        pthis = this
+      $(".raw_image").removeClass("w3-green");
+      $(".raw_image").removeClass("w3-red");
+      var set_user_image_url = '/film_collection/{{ zp_film_collection_id }}/{{ image_type }}/set/' + $(pthis).attr('image_id')
+      $.getJSON( set_user_image_url, function( data ) {
+            console.log('first' + data);
+        }).done(function(data) {
+            console.log('done' + data);
+            $(pthis).addClass("w3-green");
+        }).fail(function(data) {
+            console.log('fail' + data);
+            $(pthis).addClass("w3-red");
+        }).always(function(data) {
+            console.log('always' + data);
+        });
+    }
+  });
+    $(function(){
+        $('#film_select').change(function(){
+            var new_url = '/film_collection/' + $(this).val() + '/summary';
+            location.href = new_url;
+        });
+        $("#search_film_collection").click(function(){
+            $("#search_result_warning").text('Searching.....');
+            $("#search_result_error").text('');
+            if( $('#search_text').val().length === 0 ) {
+                 alert('Name cannot be empty');
+            }else{
+                  var subJson = { search_text: $('#search_text').val() }
+                  console.log(subJson);
+                 $.getJSON( "/film_collection/searchFilmCollections", subJson, function( data ) {
+                 }).done(function(data) {
+                    if (data.success == true){
+                        $('#film_select').empty();
+                        $.each(data.films, function(i, item) {
+                            console.log(data.films[i].title);
+                            console.log(data.films[i].id);
+                                $('#film_select').append($('<option>', {
+                                    value: item.id,
+                                    text : item.title
+                                }));
+                        });
+                        if (data.warning) {
+                            $("#search_result_warning").text(data.warning);
+                        }else {
+                            $("#search_result_warning").text('Search completed');
+                        }
+                        if (data.error) {
+                            if (data.error !== 'null') {
+                                $("#search_result_error").text(data.warning);
+                            }
+                        }
+                    }
+                 }).fail(function(data) {
+                     $("#search_result_error").text('Error in search for films data:' + data);
+                    console.log('always'  + data);
+                 }).always(function(data) {
+                    console.log('always'  + data);
+                 });
+            }
+        });
+
+        $("#search_film").click(function(){
+            $("#search_result_warning").text('Searching.....');
+            $("#search_result_error").text('');
+            if( $('#search_film_text').val().length === 0 ) {
+                 alert('Name cannot be empty');
+            }else{
+                  var subJson = { search_text: $('#search_film_text').val() }
+                  console.log(subJson);
+                 $.getJSON( "/film_collection/searchFilms", subJson, function( data ) {
+                 }).done(function(data) {
+                    if (data.success === true){
+                        $('#film_not_in_collection_select').empty();
+                        $.each(data.films, function(i, item) {
+                            console.log(data.films[i].title);
+                            console.log(data.films[i].id);
+                                $('#film_not_in_collection_select').append($('<option>', {
+                                    value: item.id,
+                                    text : item.title
+                                }));
+                        });
+                        if (data.warning) {
+                            $("#search_result_warning").text(data.warning);
+                        }else {
+                            $("#search_result_warning").text('Search completed');
+                        }
+                        if (data.error) {
+                            if (data.error !== 'null') {
+                                $("#search_result_error").text(data.warning);
+                            }
+                        }
+                    }
+                 }).fail(function(data) {
+                     $("#search_result_error").text('Error in search for films data:' + data);
+                    console.log('always'  + data);
+                 }).always(function(data) {
+                    console.log('always'  + data);
+                 });
+            }
+        });
+
+        $("#film_remove_button").click(function(){
+            $("#film_in_collection_select > option:selected").each(function(){
+                $(this).remove();
+            });
+        });
+
+        $("#film_add_button").click(function(){
+            $("#film_not_in_collection_select > option:selected").each(function(){
+                console.log($(this).val());
+                if ($("#film_in_collection_select option[value=" + $(this).val() + "]").length > 0){
+                    alert( $(this).text() + ' is allready in film collection');
+                }else{
+                   $(this).remove().appendTo("#film_in_collection_select");
+                }
+            });
+        });
+
+        $("#film_in_collection_submit").click(function(){
+            var film_in_collection_array = new Array();
+            $("#film_in_collection_select > option").each(function() {
+                film_in_collection_array.push(this.value)
+            });
+            $("#film_in_collection_json").val(JSON.stringify(film_in_collection_array));
+            $("#film_in_collection_form").submit();
+        });
+
+        $("#new_film_collection_submit").click(function(){
+            var film_in_collection_array = new Array();
+            $("#film_in_collection_select > option").each(function() {
+                film_in_collection_array.push(this.value)
+            });
+            $("#film_in_collection_json").val(JSON.stringify(film_in_collection_array));
+            $("#film_in_collection_title").val($("#col_title").val());
+            $("#film_in_collection_overview").val($("#col_overview").val());
+            $("#film_in_collection_form").submit();
+        });
+
+        $("#title_apply").click(function(){
+            var title_radio_form_radio_checked = $('input[name=zp_film_collection_title_id]:checked', '#title_radio_form').val()
+            console.log('title_radio_form radio checked value: ' + title_radio_form_radio_checked)
+            var div_zp_film_collection_title_pattern = /^\d+_(.*)/;
+            var match = div_zp_film_collection_title_pattern.exec(title_radio_form_radio_checked);
+            console.log(match[0]);
+            console.log(match[1]);
+            $('#zp_title_title').val($('#' + title_radio_form_radio_checked).text());
+            $('#zp_title_ident').val(match[1]);
+            $('#title_form').submit();
+        });
+
+        $("#overview_apply").click(function(){
+            var overview_radio_form_radio_checked = $('input[name=zp_film_collection_overview_id]:checked', '#overview_radio_form').val()
+            console.log('overview_radio_form radio checked value: ' + overview_radio_form_radio_checked)
+            var div_zp_film_collection_overview_pattern = /^\d+_(.*)/;
+            var match = div_zp_film_collection_overview_pattern.exec(overview_radio_form_radio_checked);
+            console.log(match[0]);
+            console.log(match[1]);
+            $('#zp_overview_overview').val($('#' + overview_radio_form_radio_checked).text());
+            $('#zp_overview_ident').val(match[1]);
+            $('#overview_form').submit();
+        });
+
+        $(".div_title").click(function(){
+            var this_id = this.id;
+            var div_id_pattern =  /^(\d+)_/;
+            var match = div_id_pattern.exec(this_id);
+            console.log(match[0]);
+            console.log(match[1]);
+            $("#" + match[1] + "_radio").prop("checked", true);
+        });
+        $(".div_overview").click(function(){
+            var this_id = this.id;
+            var div_id_pattern =  /^(\d+)_/;
+            var match = div_id_pattern.exec(this_id);
+            console.log(match[0]);
+            console.log(match[1]);
+            $("#" + match[1] + "_radio").prop("checked", true);
+        });
+
+    });
+});
+</script>

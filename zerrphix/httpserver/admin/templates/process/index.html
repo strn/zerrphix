@@ -1,0 +1,65 @@
+{% include "root_header_begin.html" %}
+{% include "process/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "root_sidebar_start.html" %}
+{% include "root_sidebar_main.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+    <header class="w3-container" style="padding-top:22px">
+      <h5><b>Process</b></h5>
+    </header>
+    <div class="w3-container">
+        <div class="w3-full">
+            <!-- http://divtable.com/generator/ -->
+            <form action="" method="post" id="process_form" enctype="multipart/form-data">
+                <table border="1">
+                    <tbody>
+                        <tr>
+                            {% for process_key in process_keys %}
+                                <td>{{ process_key }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% for process in process_list %}
+                        <tr>
+                            {% for process_key in process_keys %}
+                                {% if process_key in process_editable_dict %}
+                                    {% if process_editable_dict[process_key] == 'bool' %}
+                                        <td>
+                                            <select id="{{ process['zp_process_id'] }}_{{ process_key }}"
+                                                    name="{{ process['zp_process_id'] }}_{{ process_key }}" class="process_editable">
+                                                {% if process[process_key] == 1 %}
+                                                    <option value="1" selected>Enabled</option>
+                                                    <option value="0">Disabled</option>
+                                                {% else %}
+                                                    <option value="1">Enabled</option>
+                                                    <option value="0" selected>Disabled</option>
+                                                {% endif %}
+                                            </select>
+                                        </td>
+                                    {% elif process_editable_dict[process_key] == 'int' %}
+                                        <td>
+                                            <input id="{{ process['zp_process_id'] }}_{{ process_key }}"
+                                                   name="{{ process['zp_process_id'] }}_{{ process_key }}"
+                                                   type="text" value="{{ process[process_key] }}" size="5"
+                                            class="process_editable">
+                                        </td>
+                                    {% else %}
+                                        <td>{{ process[process_key] }}</td>
+                                    {% endif %}
+                                {% else %}
+                                    <td>{{ process[process_key] }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            <br>
+            <button id="process_form_submit" type="button">Apply Changes</button>
+        </div>
+    </div><br>
+
+{% include "root_footer.html" %}

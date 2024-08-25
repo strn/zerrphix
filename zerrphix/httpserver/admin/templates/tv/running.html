@@ -1,0 +1,51 @@
+{% include "root_header_begin.html" %}
+{% include "tv/header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "tv/sidebar_start.html" %}
+{% include "tv/sidebar_index.html" %}
+{% include "tv/sidebar_end.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>TV Shows - Mointored for new episodes</b></h5>
+  </header>
+  <div class="w3-container">
+          <div class="w3-full">
+              <h5>Shows to monitor</h5>
+          </div>
+          <div class="w3-half">
+              <select id="runnning_tv_select" name="runnning_tv_select" size="25"  style="width: 90%">
+                  {% for tv in tv_running_list %}
+                      <option value="{{ tv.zp_tv_id }}">{{ tv.title }}</option>
+                  {% endfor %}
+              </select>
+          <br>
+          <button id="running_button_remove" type="button">
+                  Remove</button>
+          </div>
+          <div class="w3-half">
+              Search for a Show <input type="text" size="25" id="search_text"
+                                       value="">&nbsp;<button id="running_search_button" type="button">
+                  Search</button>
+              <p id="search_result_warning"></p>
+              <p id="search_result_error"></p>
+              <select id="running_tv_search_select" size="20" style="width: 90%">
+              </select>
+          <br>
+          <button id="running_button_add" type="button">Add</button>
+          <br>
+          </div>
+    </div>
+  <div class="w3-container">
+          <div class="w3-half">
+              <form action="" method="post" enctype="multipart/form-data" id="running_form">
+                  <input type="hidden" value="" id="tv_running_list" name="tv_running_list">
+              </form>
+              <br>
+          <button id="running_submit" type="button">Apply</button>
+          </div>
+  </div><br>
+
+{% include "root_footer.html" %}

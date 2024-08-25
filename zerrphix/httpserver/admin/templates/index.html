@@ -1,0 +1,229 @@
+{% include "root_header_begin.html" %}
+{% include "header_jquery.html" %}
+{% include "root_header_end.html" %}
+{% include "root_sidebar_start.html" %}
+{% include "root_sidebar_main.html" %}
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h5><b>Welcome to Zerrphix Admin</b></h5>
+  </header>
+    <div class="w3-row-padding ">
+    <div class="w3-quarter">
+      <div class="w3-container w3-red w3-padding-4 w3-center-text font-16">
+                <p id="fatal"></p>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-deep-orange w3-padding-4 w3-center-text font-16">
+                <p id="exceptions"></p>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-orange w3-padding-4 w3-center-text font-16">
+                <p id="errors"></p>
+      </div>
+    </div>
+    <div class="w3-quarter">
+      <div class="w3-container w3-blue-grey w3-padding-4 w3-center-text font-16">
+                <p id="warnings"></p>
+      </div>
+    </div>
+    </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-orange w3-padding-4 w3-center-text font-16">
+          <p id="avail_download"></p>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-orange w3-padding-4 w3-center-text font-16">
+          <p id="avail_render"></p>
+      </div>
+    </div>
+    </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-orange w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td id="film_current_library_process"></td>
+          <td id="film_current_library_process_running_datetime" class="banner-info-1-td-datetime"></td>
+          </tr>
+            <tr>
+          <td id="film_current_library_process_state" colspan="2">Loading....</td>
+            </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-orange w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td id="show_current_library_process">Shows Thread Current State</td>
+          <td id="show_current_library_process_running_datetime" class="banner-info-1-td-datetime"></td>
+          </tr><tr>
+          <td id="show_current_library_process_state" colspan="2">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Films Yet To Try To Identify</td>
+          <td id="films_unidentified_no_retry_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Shows Yet To Try To Identify</td>
+          <td id="shows_unidentified_no_retry_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td><a href="/film/unIdentified">Films Unable To Identify</a></td>
+          <td id="films_unidentified_retry_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td><a href="/tv/unIdentified">Shows Unable To Identify</a></td>
+          <td id="shows_unidentified_retry_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td><a href="/film/invalidFileFolder">Film Invalid Files/Folders</a></td>
+          <td id="films_invalid_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td><a href="/tv/invalidFileFolder">Show Invalid Folders</a></td>
+          <td id="shows_invalid_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Films Awaiting Initial Data Aquisition Attempt</td>
+          <td id="films_awating_data_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Shows Awaiting Initial Data Aquisition Attempt</td>
+          <td id="shows_awating_data_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Films Awaiting Initial Image Aquisition Attempt</td>
+          <td id="films_awating_image_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Shows Awaiting Initial Image Aquisition Attempt</td>
+          <td id="shows_awating_image_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Films Awating Icon Artwork Rendering</td>
+          <td id="films_awating_icon_artwork_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Shows Awating Icon Artwork Rendering</td>
+          <td id="shows_awating_icon_artwork_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+    <div class="w3-row-padding ">
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Films Awating Synopsis Artwork Rendering</td>
+          <td id="films_awating_synopsis_artwork_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-container w3-teal w3-padding-4">
+        <table class="banner-info-1-table">
+          <tr>
+          <td>Shows Awating Synopsis Artwork Rendering</td>
+          <td id="shows_awating_synopsis_artwork_count" class="banner-count">Loading....</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    </div>
+
+{% include "root_footer.html" %}
